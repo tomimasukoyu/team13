@@ -11,6 +11,7 @@ class GameManager {
     GameManager() {
 
         scene = 0; //ステージ選択画面
+        stage = 0;
         stageSelect = new StageSelect();
 
     }
@@ -28,6 +29,28 @@ class GameManager {
 
     }
 
+    void clearStage() {
+
+        scene = 2;
+
+    }
+
+    void nextStage() {
+
+        stage++;
+
+        loadStage();
+
+        scene = 1;
+
+    }
+
+    void backToSelect() {
+
+        scene = 0;
+
+    }
+
 
     void loadStage() {
 
@@ -36,13 +59,13 @@ class GameManager {
         switch(stage) {
 
         case 1:
-            objects.add(new Door(600, 200, 100, 200, "door.png"));
-            objects.add(new PickupItem(100, 400, 50, 50, "key.png"));
+            objects.add(new Door(600, 200, 100, 200));
+            objects.add(new Puzzle(100, 400, 50, 50));
             break;
 
 
         case 2:
-            objects.add(new Door(600, 200, 100, 200, "door.png"));
+            objects.add(new Door(600, 200, 100, 200));
             break;
 
         }
