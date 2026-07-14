@@ -16,19 +16,6 @@ class GameManager {
 
     }
 
-
-    void update() {
-
-        if(scene == 1) {
-
-            for(BaseObject obj : objects) {
-                obj.update();
-            }
-
-        }
-
-    }
-
     void clearStage() {
 
         scene = 2;
