@@ -8,7 +8,6 @@ void setup() {
 }
 
 void draw() {
-    gm.update();
     gm.display();
 }
 
