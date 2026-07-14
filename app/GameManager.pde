@@ -50,8 +50,11 @@ class GameManager {
             objects.add(new Puzzle(100, 400, 50, 50));
             break;
 
-
         case 2:
+            objects.add(new Door(600, 200, 100, 200));
+            break;
+
+        case 3:
             objects.add(new Door(600, 200, 100, 200));
             break;
 
