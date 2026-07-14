@@ -30,4 +30,9 @@ class BaseObject {
   void inspect() {
     println(description);
   }
+
+  void action() { 
+    inspect();
+  }
+  
 }
