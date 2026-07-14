@@ -144,13 +144,61 @@ Item、Door、Puzzle に共通する情報や動作をまとめる。
 
 ## Door.pde
 ステージの出口になるドア。
-
 役割：
 ドアが開くかどうかを管理する。
 アイテムや謎解きの結果によってロックを解除する。
+主担当者: 寺谷春樹
+属性:
+   boolean isLocked: ドアのロック状態（true: 閉, false: 開）
+   float doorX: ドアの現在のX位置
+   float targetX: ドアが完全に開いた時の目標位置
+メソッド:
+   void checkUnlock(ArrayList<Puzzle> puzzleList): 全パズルの isSolved を監視し、すべて true なら isLocked を false にする
+   void update(): isLocked が false の時にスライド移動させる
+   void display(): ドアを画面に描画する
 ## Puzzle.pde
 暗号や謎解きを管理するクラス。
-
 役割：
 ステージごとの謎を管理する。
 答えが正しいか判定し、正解ならドアを開けられる状態にする。
+主担当者:寺谷春樹
+属性:
+   boolean isSolved: パズルが解けたかどうかのフラグ
+   String puzzleID: パズル識別用のID
+メソッド:
+   void action(): パズルの動作定義（ポリモーフィズム）
+   void checkPuzzleLogic(): パズルの判定処理（サブクラスで拡張）
+## SequencePuzzle(順番入力パズル)
+主担当者: 寺谷春樹
+属性:
+   ArrayList<Integer> inputSequence: ユーザーが入力した順序を記録
+   int[] correctSequence: 正解の順番
+メソッド:
+   void addInput(int id): ユーザーの入力をリストに追加し、4つ揃ったら判定処理を呼ぶ
+   void checkLogic(): 正誤判定を行い、正解ならフラグを立て、不正解ならリストをリセットする
+## ColorPuzzle (色順入力パズル)
+主担当者: 寺谷春樹
+属性: (SequencePuzzleを継承)
+メソッド: (SequencePuzzleを継承)
+メモ: SequencePuzzle を継承し、correctSequence を色ID（0:青, 1:黄, 2:赤）に再定義して使用。
+## ColorButton (色変更ボタン)
+主担当者: 寺谷春樹
+属性:
+   int colorID: 現在の色状態（0:黒, 1:赤, 2:白）
+メソッド:
+   void action(): クリックするたびに色IDを切り替える（ループ処理）
+   void display(): 現在の色IDに応じた円を画面に描画する
+## TrumpPuzzle (トランプ色合わせパズル)
+主担当者: 寺谷春樹
+属性:
+   ColorButton[] buttons: 4つの色変更ボタンの配列
+   int[] correctPattern: 正解となる色のパターン配列
+メソッド:
+   checkLogic(): 全ボタンの現在の色IDと正解パターンを比較し、一致すれば isSolved を更新
+## KnockPuzzle (ノックパズル)
+主担当者: 寺谷春樹
+属性:
+   int knockCount: 現在のノック回数
+   int targetCount: クリアに必要な回数（100回）
+メソッド:
+   d action(): クリック時にカウントを加算し、規定回数に達したら isSolved を true にする
