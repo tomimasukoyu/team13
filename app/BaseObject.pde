@@ -1,19 +1,21 @@
 class BaseObject {
-  String name;
-  String description;
-  float x;
-  float y;
-  float w;
-  float h;
+    String name;
+    String description;
+    String imgPath;
 
-  BaseObject(String name, String description, float x, float y, float w, float h) {
-    this.name = name;
-    this.description = description;
-    this.x = x;
-    this.y = y;
-    this.w = w;
-    this.h = h;
-  }
+    float x;
+    float y;
+    float w;
+    float h;
+
+    BaseObject(float x, float y, float w, float h, String imgPath) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.imgPath = imgPath;
+    }
+
 
   void display() {
     rect(x, y, w, h);

@@ -5,7 +5,7 @@ class Door extends BaseObject {
     float targetX; // 開いた時の目標位置
     
     Door(float x, float y, float w, float h, String imgPath) {
-        super(x, y, w, h, imgPath);
+        super("door","出口のドア",x,y,w,h);
         this.doorX = x;
         this.targetX = x + 100; // 右に100px移動して開く設定
     }
