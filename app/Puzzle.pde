@@ -42,7 +42,7 @@ SequencePuzzle(float x, float y, float w, float h, String imgPath, String id) {
         println("現在の入力: " + inputSequence);
         
         // 4つ入力されたら判定
-        if (inputSequence.size() == 4) {
+        if(inputSequence.size() == correctSequence.length){
             checkLogic();
         }
     }
@@ -50,7 +50,7 @@ SequencePuzzle(float x, float y, float w, float h, String imgPath, String id) {
     void checkLogic() {
         // 正誤判定ロジック
         boolean isCorrect = true;
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < correctSequence.length; i++){
             if(inputSequence.get(i) != correctSequence[i]) {
                 isCorrect = false;
             }
