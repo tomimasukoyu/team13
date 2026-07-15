@@ -7,9 +7,8 @@ void setup() {
 
   size(800, 600);
 
-  // 日本語フォントを読み込む
   japaneseFont = createFont(
-    "Yu Gothic",
+    "Meiryo",
     20,
     true
   );
