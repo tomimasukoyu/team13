@@ -27,27 +27,35 @@ class StageSelect {
     );
 
     drawDoor(
-      100,
-      150,
-      150,
-      250,
+      120,
+      130,
+      120,
+      180,
       "Stage 1"
     );
 
     drawDoor(
-      325,
-      150,
-      150,
-      250,
+      320,
+      130,
+      120,
+      180,
       "Stage 2"
     );
 
     drawDoor(
-      550,
-      150,
-      150,
-      250,
+      120,
+      340,
+      120,
+      180,
       "Stage 3"
+    );
+
+    drawDoor(
+      320,
+      340,
+      120,
+      180,
+      "Stage 4"
     );
 
     fill(0);
@@ -104,10 +112,10 @@ class StageSelect {
   int mousePressed() {
 
     if (
-      mouseX >= 100 &&
-      mouseX <= 250 &&
-      mouseY >= 150 &&
-      mouseY <= 400
+      mouseX >= 170 &&
+      mouseX <= 120 &&
+      mouseY >= 140 &&
+      mouseY <= 220
     ) {
 
       return 1;
@@ -115,10 +123,10 @@ class StageSelect {
 
 
     if (
-      mouseX >= 325 &&
-      mouseX <= 475 &&
-      mouseY >= 150 &&
-      mouseY <= 400
+      mouseX >= 490 &&
+      mouseX <= 120 &&
+      mouseY >= 140 &&
+      mouseY <= 220
     ) {
 
       return 2;
@@ -126,13 +134,23 @@ class StageSelect {
 
 
     if (
-      mouseX >= 550 &&
-      mouseX <= 700 &&
-      mouseY >= 150 &&
-      mouseY <= 400
+      mouseX >= 170 &&
+      mouseX <= 350 &&
+      mouseY >= 140 &&
+      mouseY <= 220
     ) {
 
       return 3;
+    }
+
+    if(
+      mouseX >= 490 &&
+      mouseX <= 350 &&
+      mouseY >= 140 && 
+      mouseY <= 220
+      ){
+
+      return 4;
     }
 
 
