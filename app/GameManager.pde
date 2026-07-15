@@ -134,7 +134,7 @@ class GameManager {
 
 
     // 次のステージボタン
-    if (stage < 3) {
+    if (stage < 4) {
 
       fill(100, 200, 120);
       stroke(0);
@@ -279,6 +279,32 @@ class GameManager {
   objects.add(door);
 
   break;
+
+  case 4:
+
+  door = new Door(
+    width / 2 - 60,
+    100,
+    120,
+    280,
+    ""
+  );
+
+  ColorPuzzle colorPuzzle =
+    new ColorPuzzle(
+      150,
+      400,
+      500,
+      80,
+      "",
+      "color01"
+    );
+
+  addPuzzle(colorPuzzle);
+  objects.add(door);
+
+  break;
+
     }
   }
   
@@ -306,7 +332,7 @@ class GameManager {
   // 次のステージへ進む
   void nextStage() {
 
-    if (stage < 3) {
+    if (stage < 4) {
 
       stage++;
 
@@ -338,7 +364,7 @@ class GameManager {
   // 現在のステージをやり直す
   void restartStage() {
 
-    if (stage >= 1 && stage <= 3) {
+    if (stage >= 1 && stage <= 4) {
 
       loadStage();
 
@@ -425,7 +451,7 @@ class GameManager {
 
       // 次のステージへ
       if (
-        stage < 3 &&
+        stage < 4 &&
         mouseX >= 250 &&
         mouseX <= 550 &&
         mouseY >= 330 &&
