@@ -392,17 +392,7 @@ class ColorPuzzle extends SequencePuzzle {
         x + w / 2,
         y - 20
       );
-
-    } else {
-
-      text(
-        "青 → 黄 → 赤",
-        x + w / 2,
-        y - 20
-      );
     }
-
-
     noStroke();
   }
 
@@ -621,27 +611,7 @@ class TrumpPuzzle extends Puzzle {
         w,
         h
       );
-
-    } else {
-
-      fill(240);
-      stroke(0);
-      rect(x, y, w, h);
-
-      textFont(japaneseFont);
-
-      fill(0);
-      textAlign(CENTER, CENTER);
-      textSize(16);
-
-      text(
-        "tramp.pngを読み込めません",
-        x + w / 2,
-        y + h / 2
-      );
     }
-
-
     for (
       int i = 0;
       i < suitSymbols.length;
@@ -700,19 +670,9 @@ class TrumpPuzzle extends Puzzle {
 
 
     if (isSolved) {
-
       fill(0, 150, 0);
-
       text(
         "CLEAR",
-        x + w / 2,
-        y + h + 28
-      );
-
-    } else {
-
-      text(
-        "Click the card symbols",
         x + w / 2,
         y + h + 28
       );
@@ -839,6 +799,7 @@ class KnockPuzzle extends Puzzle {
 
   int knockCount;
   int targetCount;
+  boolean isLocked;
 
 
   KnockPuzzle(
@@ -860,84 +821,80 @@ class KnockPuzzle extends Puzzle {
 
 
     name = "Knock Puzzle";
-    description = "10回ノックするパズル";
+    description = "30回ノックするパズル";
 
     knockCount = 0;
-    targetCount = 10;
+    targetCount = 30;
+    isLocked = true;
   }
 
 
   @Override
   void display() {
 
-    if (isSolved) {
+    stroke(70, 40, 20);
+    strokeWeight(5);
 
-      fill(100, 220, 120);
-
+    // ロック中と解除後で色を変える
+    if (isLocked) {
+      fill(120, 70, 30);
     } else {
-
-      fill(180, 120, 80);
+      fill(180, 120, 60);
     }
 
+    rect(x, y, w, h);
 
-    stroke(0);
 
-    rect(
-      x,
-      y,
-      w,
-      h
+    // ドアノブ
+    fill(255, 215, 0);
+    noStroke();
+
+    ellipse(
+      x + w - 20,
+      y + h / 2,
+      15,
+      15
     );
 
 
+    // ドアの状態またはノック回数の表示
     fill(255);
     textAlign(CENTER, CENTER);
-    textSize(16);
+    textSize(18);
 
-
-    if (isSolved) {
-
+    if (isLocked) {
       text(
-        "CLEAR",
+        "LOCKED",
         x + w / 2,
-        y + h / 2
+        y + 35
       );
-
     } else {
-
       text(
-        "KNOCK\n" +
-        knockCount +
-        "/" +
-        targetCount,
+        "OPEN",
         x + w / 2,
-        y + h / 2
+        y + 35
       );
     }
-
-
-    noStroke();
   }
-
 
   @Override
   void action() {
 
-    if (isSolved) {
+    if (!isLocked) {
+      println("ドアを開けました！");
       return;
     }
 
-
     knockCount++;
+    println("ノック！ (" + knockCount + "/" + targetCount + ")");
 
 
     if (knockCount >= targetCount) {
-
       isSolved = true;
+      isLocked = false;
 
-      println(
-        "Knock Puzzle Clear"
-      );
+      println("全ての謎が解けました！");
+      println("ドアのロックが解除されました！");
     }
   }
 }

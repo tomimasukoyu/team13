@@ -1,5 +1,8 @@
 // GameManager.pde
 
+PImage signalImage;
+PImage knockHintImage;
+
 class GameManager {
 
   // 画面番号
@@ -27,6 +30,10 @@ class GameManager {
 
     objects = new ArrayList<BaseObject>();
     puzzles = new ArrayList<Puzzle>();
+    
+    // 信号機画像の読み込み（データフォルダに "signal.png" を入れておく）
+    signalImage = loadImage("signal.png");
+    knockHintImage = loadImage("knock_hint.png");
   }
 
 
@@ -83,8 +90,15 @@ class GameManager {
     textSize(24);
     text("Stage " + stage, 20, 20);
 
-    textSize(15);
-    text("パズルを解いてドアを開けよう", 20, 55);
+    // ステージ1の場合、ドアの上にノックヒント画像を表示
+    if (stage == 1 && knockHintImage != null) {
+     image(knockHintImage, width / 2 - 80, 5, 160, 110);
+    }
+
+    // ステージ4の場合、ドアの上に信号機画像を表示
+    if (stage == 4 && signalImage != null) {
+      image(signalImage, width / 2 - 80, 30, 160, 70); // 位置やサイズは調整してください
+    }
 
     // 全オブジェクトを表示
     for (BaseObject object : objects) {
@@ -207,16 +221,14 @@ class GameManager {
       );
 
       KnockPuzzle knockPuzzle = new KnockPuzzle(
-        100,
-        330,
-        140,
-        100,
+        width / 2 - 60,
+        120,
+        120,
+        280,
         "knock01"
       );
 
       addPuzzle(knockPuzzle);
-      objects.add(door);
-
       break;
 
 
@@ -434,6 +446,14 @@ class GameManager {
 
             clearStage();
           }
+          
+          if (
+             object instanceof KnockPuzzle &&
+             ((KnockPuzzle)object).isSolved
+          ) {
+
+        clearStage();
+      }
 
           // 複数のオブジェクトを同時に押さない
           break;
