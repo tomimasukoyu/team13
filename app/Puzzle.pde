@@ -126,6 +126,30 @@ class SequencePuzzle extends Puzzle {
 
   @Override
   void display() {
+    
+    pushStyle();
+    textAlign(CENTER, CENTER);
+    textSize(14);
+    fill(0);
+
+    // 4つの小さなランプで何回目かを表示（4つなので左右の幅を少し広げて調整）
+    float lampStartX = width / 2 - 45;
+    float lampY = 50; 
+    
+    for (int i = 0; i < 4; i++) {
+      if (i < inputSequence.size()) {
+        // すでに押された回数は緑色に光らせる
+        fill(50, 250, 50);
+      } else {
+        // まだ押していない回数は暗いグレー
+        fill(100);
+      }
+      stroke(0);
+      strokeWeight(1);
+      // ランプの間隔を 30px から 30pxおきに4つ配置（lampStartX + i * 30）
+      ellipse(lampStartX + i * 30, lampY, 15, 15);
+    }
+    popStyle();
 
   // 時計を表示
 // 左
@@ -346,6 +370,10 @@ drawClock(x + 500, y - 100, 2);
 // 色の順番パズル
 // ==================================================
 
+// ==================================================
+// 色の順番パズル
+// ==================================================
+
 class ColorPuzzle extends SequencePuzzle {
 
   int[] buttonColors = {
@@ -383,6 +411,33 @@ class ColorPuzzle extends SequencePuzzle {
 
   @Override
   void display() {
+
+    // --- 信号機の上に現在の入力状況（何回目か）を表示する演出 ---
+    // GameManager側で描画している信号機の位置（width/2, 30付近）に合わせて、
+    // その上に小さなインジケーター（丸ランプ）を3つ並べて表示します。
+    pushStyle();
+    textAlign(CENTER, CENTER);
+    textSize(14);
+    fill(0);
+
+    // 3つの小さなランプで何回目かを表示
+    float lampStartX = width / 2 - 30;
+    float lampY = 18;
+    for (int i = 0; i < 3; i++) {
+      if (i < inputSequence.size()) {
+        // すでに押された回数は明るく光らせる（または緑色など）
+        fill(50, 250, 50);
+      } else {
+        // まだ押していない回数は暗いグレー
+        fill(100);
+      }
+      stroke(0);
+      strokeWeight(1);
+      ellipse(lampStartX + i * 30, lampY, 15, 15);
+    }
+    popStyle();
+    // ----------------------------------------------------
+
 
     float buttonWidth =
       w / buttonColors.length;
@@ -432,8 +487,8 @@ class ColorPuzzle extends SequencePuzzle {
 
       text(
         "CLEAR",
-        w / 2,
-        70
+        width / 2,
+        y - 20
       );
     }
     noStroke();
@@ -838,11 +893,17 @@ class TrumpPuzzle extends Puzzle {
 // Stage1：ノックパズル
 // ==================================================
 
+// ==================================================
+// Stage1：ノックパズル
+// ==================================================
+
 class KnockPuzzle extends Puzzle {
 
   int knockCount;
   int targetCount;
   boolean isLocked;
+  // 揺れ演出用の変数
+  int shakeTimer = 0;
 
 
   KnockPuzzle(
@@ -875,6 +936,15 @@ class KnockPuzzle extends Puzzle {
   @Override
   void display() {
 
+    // 揺れタイマーが残っている間は、描画位置をランダムにずらす
+    float offsetX = 0;
+    float offsetY = 0;
+    if (shakeTimer > 0) {
+      offsetX = random(-4, 4);
+      offsetY = random(-4, 4);
+      shakeTimer--;
+    }
+    
     stroke(70, 40, 20);
     strokeWeight(5);
 
@@ -885,16 +955,18 @@ class KnockPuzzle extends Puzzle {
       fill(180, 120, 60);
     }
 
-    rect(x, y, w, h);
+    // ★修正：ドア本体にoffsetX, offsetYを反映
+    rect(x + offsetX, y + offsetY, w, h);
 
 
     // ドアノブ
     fill(255, 215, 0);
     noStroke();
 
+    // ★修正：ドアノブにもoffsetX, offsetYを反映
     ellipse(
-      x + w - 20,
-      y + h / 2,
+      x + offsetX + w - 20,
+      y + offsetY + h / 2,
       15,
       15
     );
@@ -906,16 +978,17 @@ class KnockPuzzle extends Puzzle {
     textSize(18);
 
     if (isLocked) {
+      // ★修正：文字位置にもoffsetX, offsetYを反映
       text(
         "LOCKED",
-        x + w / 2,
-        y + 35
+        x + offsetX + w / 2,
+        y + offsetY + 35
       );
     } else {
       text(
         "OPEN",
-        x + w / 2,
-        y + 35
+        x + offsetX + w / 2,
+        y + offsetY + 35
       );
     }
   }
@@ -929,6 +1002,7 @@ class KnockPuzzle extends Puzzle {
     }
 
     knockCount++;
+    shakeTimer = 8; // クリックされたら揺れるフレーム数を少し長め(8フレーム)に設定
     println("ノック！ (" + knockCount + "/" + targetCount + ")");
 
 
