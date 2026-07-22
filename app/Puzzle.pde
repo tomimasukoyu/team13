@@ -127,82 +127,135 @@ class SequencePuzzle extends Puzzle {
   @Override
   void display() {
 
-    fill(210);
-    stroke(0);
-    rect(x, y, w, h);
+  // 時計を表示
+// 左
+drawClock(x + 80,  y - 100, 3);
+drawClock(x + 160, y - 100, 1);
 
-    int buttonCount = correctSequence.length;
+// 右
+drawClock(x + 420, y - 100, 4);
+drawClock(x + 500, y - 100, 2);
 
-    float buttonWidth =
-      w / buttonCount;
+  fill(0);
+  textAlign(CENTER, CENTER);
+  textSize(15);
 
+  if (isSolved) {
 
-    for (
-      int i = 0;
-      i < buttonCount;
-      i++
-    ) {
+    text(
+      "CLEAR",
+      x + w / 2,
+      y - 35
+    );
 
-      float buttonX =
-        x + i * buttonWidth;
+  } else {
 
-
-      if (isSolved) {
-
-        fill(100, 220, 120);
-
-      } else {
-
-        fill(180, 200, 250);
-      }
-
-
-      stroke(0);
-
-      rect(
-        buttonX,
-        y,
-        buttonWidth,
-        h
-      );
+    text(
+      "順番に押せ",
+      x + w / 2,
+      y - 35
+    );
+  }
 
 
-      fill(0);
-      textAlign(CENTER, CENTER);
-      textSize(20);
+  // 数字ボタンの背景
+  fill(210);
+  stroke(0);
+  rect(x, y, w, h);
 
-      text(
-        i + 1,
-        buttonX + buttonWidth / 2,
-        y + h / 2
-      );
-    }
+  int buttonCount = correctSequence.length;
+
+  float buttonWidth =
+    w / buttonCount;
 
 
-    fill(0);
-    textAlign(CENTER, CENTER);
-    textSize(15);
+  for (
+    int i = 0;
+    i < buttonCount;
+    i++
+  ) {
+
+    float buttonX =
+      x + i * buttonWidth;
 
 
     if (isSolved) {
 
-      text(
-        "CLEAR",
-        x + w / 2,
-        y - 20
-      );
+      fill(100, 220, 120);
 
     } else {
 
-      text(
-        "3 → 1 → 4 → 2",
-        x + w / 2,
-        y - 20
-      );
+      fill(180, 200, 250);
     }
 
 
+    stroke(0);
+
+    rect(
+      buttonX,
+      y,
+      buttonWidth,
+      h
+    );
+
+
+    fill(0);
+    textAlign(CENTER, CENTER);
+    textSize(20);
+
+    text(
+      i + 1,
+      buttonX + buttonWidth / 2,
+      y + h / 2
+    );
+  }
+
+
+  noStroke();
+  }
+
+
+  // 時計を描く関数
+  void drawClock(
+    float cx,
+    float cy,
+    int hour
+  ) {
+
+    // 時計の外枠
+    fill(255);
+    stroke(0);
+    strokeWeight(2);
+    ellipse(cx, cy, 50, 50);
+
+    // 12時・3時・6時・9時の目盛り
+    line(cx, cy - 20, cx, cy - 15);
+    line(cx + 20, cy, cx + 15, cy);
+    line(cx, cy + 20, cx, cy + 15);
+    line(cx - 20, cy, cx - 15, cy);
+
+    // 長針は12時方向
+    strokeWeight(2);
+    line(cx, cy, cx, cy - 20);
+
+    // 短針
+    float angle =
+      radians(hour * 30 - 90);
+
+    strokeWeight(4);
+    line(
+      cx,
+      cy,
+      cx + cos(angle) * 14,
+      cy + sin(angle) * 14
+    );
+
+    // 時計の中心
+    fill(0);
     noStroke();
+    ellipse(cx, cy, 6, 6);
+
+    strokeWeight(1);
   }
 
 
