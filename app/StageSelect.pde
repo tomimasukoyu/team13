@@ -60,12 +60,6 @@ class StageSelect {
 
     fill(0);
     textSize(16);
-
-    text(
-      "遊びたいステージのドアをクリック",
-      width / 2,
-      500
-    );
   }
 
 
