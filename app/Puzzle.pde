@@ -432,8 +432,8 @@ class ColorPuzzle extends SequencePuzzle {
 
       text(
         "CLEAR",
-        x + w / 2,
-        y - 20
+        w / 2,
+        70
       );
     }
     noStroke();
